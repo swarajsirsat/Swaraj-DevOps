@@ -4,24 +4,24 @@ FROM node:18-alpine AS build-stage
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install --omit=dev
+RUN npm install
 
 COPY . .
 RUN npm run build
 
-# Stage 2: Production Runtime Execution
+# Stage 2: Production Runtime Execution (Standalone Output)
 FROM node:18-alpine AS runtime-stage
 
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV PORT=3000
+
 EXPOSE 3000
 
-COPY --from=build-stage /app/package*.json ./
-RUN npm install --omit=dev
-
-COPY --from=build-stage /app/.next ./.next
+# Copy Next.js standalone output
+COPY --from=build-stage /app/.next/standalone ./
+COPY --from=build-stage /app/.next/static ./.next/static
 COPY --from=build-stage /app/public ./public
-COPY --from=build-stage /app/next.config.ts ./next.config.ts
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
