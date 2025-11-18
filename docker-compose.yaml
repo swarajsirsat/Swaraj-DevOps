@@ -3,9 +3,9 @@ services:
     image: postgres:14-alpine
     container_name: next_notes_db
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: notesdb
+      POSTGRES_USER: ${DB_USER:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: ${DB_NAME:-notesdb}
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
@@ -21,7 +21,8 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://user:password@next_notes_db:5432/notesdb
+      PORT: 3000
+      DATABASE_URL: postgres://${DB_USER:-user}:${DB_PASSWORD:-password}@next_notes_db:5432/${DB_NAME:-notesdb}
     depends_on:
       - db
     networks:
