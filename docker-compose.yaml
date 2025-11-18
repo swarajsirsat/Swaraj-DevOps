@@ -1,6 +1,23 @@
-version: "3.9"
+You got it\!
 
+Here is the code for the updated `docker-compose.yml` file, which is necessary to resolve your container name conflict and the obsolete version warning:
+
+```yaml:docker Compose (Resolved Conflict)
 services:
+  # 1. Database Service (Required to manage the 'db_cont' container name)
+  db:
+    image: postgres:14-alpine
+    container_name: db_cont 
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: notesdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+  # 2. Next.js Application Service
   nextapp:
     container_name: nextjs-app
     build:
@@ -11,9 +28,16 @@ services:
     restart: always
     environment:
       NODE_ENV: production
+      DATABASE_URL: postgres://user:password@db:5432/notesdb 
+    depends_on:
+      - db
     networks:
       - app-net
 
 networks:
   app-net:
     driver: bridge
+
+volumes:
+  db_data:
+```
