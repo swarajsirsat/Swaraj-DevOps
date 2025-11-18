@@ -12,7 +12,7 @@ services:
       - app-net
 
   nextapp:
-    container_name: nextjs-app
+    container_name: next_notes_app
     build:
       context: .
       dockerfile: Dockerfile
