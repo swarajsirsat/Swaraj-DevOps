@@ -22,6 +22,8 @@ EXPOSE 3000
 # Copy Next.js standalone output
 COPY --from=build-stage /app/.next/standalone ./
 COPY --from=build-stage /app/.next/static ./.next/static
-COPY --from=build-stage /app/public ./public
+
+# Only copy public if it exists (your project currently does not have it)
+# COPY --from=build-stage /app/public ./public
 
 CMD ["node", "server.js"]
