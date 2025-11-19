@@ -4,11 +4,11 @@ pipeline {
 
     environment {
         REGISTRY_CREDENTIALS = credentials('dockerhub-creds')
-        DOCKERHUB_USER = "${REGISTRY_CREDENTIALS_USR}"
-        DOCKERHUB_PASS = "${REGISTRY_CREDENTIALS_PSW}"
+        DOCKERHUB_USER       = "${REGISTRY_CREDENTIALS_USR}"
+        DOCKERHUB_PASS       = "${REGISTRY_CREDENTIALS_PSW}"
 
-        IMAGE_NAME = "${DOCKERHUB_USER}/next-notes-app"
-        IMAGE_TAG  = "v1"
+        IMAGE_NAME           = "${DOCKERHUB_USER}/next-notes-app"
+        IMAGE_TAG            = "v1"
     }
 
     stages {
@@ -22,7 +22,10 @@ pipeline {
         stage("Code Checkout") {
             steps {
                 echo "Initiating SCM checkout for Next.js workload"
-                git url: "https://github.com/swarajsirsat/Swaraj-DevOps.git", branch: "main"
+                code_checkout(
+                    "https://github.com/swarajsirsat/Swaraj-DevOps.git",
+                    "main"
+                )
             }
         }
 
@@ -65,7 +68,6 @@ pipeline {
                 """
             }
         }
-
     }
 
     post {
