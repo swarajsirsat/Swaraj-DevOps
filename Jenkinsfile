@@ -12,7 +12,7 @@ pipeline {
         IMAGE_TAG            = "v1"
 
         // SonarQube Credential
-        SONAR_TOKEN = credentials('sqa_579d64dda56488e425281b2f3a3da40acfcfcba4')
+        SONAR_TOKEN = credentials('sonarqube-token')
     }
 
     stages {
