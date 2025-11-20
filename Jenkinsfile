@@ -32,7 +32,7 @@ pipeline {
         stage("SonarQube Code Analysis") {
             steps {
                 echo "Executing SonarQube Scanner for code quality assessment"
-                withSonarQubeEnv('Sonar-Prod') {
+                withSonarQubeEnv('sonar-scanner') {
                     sh """
                         sonar-scanner \
                           -Dsonar.projectKey=node-app \
