@@ -3,7 +3,7 @@ pipeline {
     agent { label 'Swaraj' }
 
     tools {
-        sonarScanner 'sonar-scanner'
+        SonarQubeScanner 'sonar-scanner'
     }
 
     environment {
