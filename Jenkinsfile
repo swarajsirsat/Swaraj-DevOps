@@ -2,10 +2,6 @@
 pipeline {
     agent { label 'Swaraj' }
 
-    tools {
-        SonarQubeScanner 'sonar-scanner'
-    }
-
     environment {
         // Docker Hub Credentials
         REGISTRY_CREDENTIALS = credentials('dockerhub-creds')
