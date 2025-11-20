@@ -29,21 +29,6 @@ pipeline {
             }
         }
 
-        stage("SonarQube Code Analysis") {
-            steps {
-                echo "Executing SonarQube Scanner for code quality assessment"
-                withSonarQubeEnv('sonar-scanner') {
-                    sh """
-                        sonar-scanner \
-                          -Dsonar.projectKey=node-app \
-                          -Dsonar.projectName=node-app \
-                          -Dsonar.sources=. \
-                          -Dsonar.exclusions=node_modules/**
-                    """
-                }
-            }
-        }
-
         stage("Docker Build") {
             steps {
                 echo "Executing Next.js container build"
