@@ -104,11 +104,13 @@ pipeline {
 
     post {
         always {
-            echo "Executing cleanup lifecycle"
-            sh """
-                docker image prune -f
-                docker logout
-            """
+            node('Swaraj') {     // <-- FIX APPLIED HERE
+                echo "Executing cleanup lifecycle"
+                sh """
+                    docker image prune -f
+                    docker logout
+                """
+            }
         }
     }
 }
